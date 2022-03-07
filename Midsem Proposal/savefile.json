@@ -1,0 +1,27 @@
+{
+	"DefaultGridHeight":10,
+	"DefaultGridWidth":6,
+	"highScore":0,
+	"NumberOfBlocks":5,
+	"blockColors":["0xFFFFFF","0xFF0000","0x00FF00","0x0000FF","0xFFFF00"],
+	"blockShapes":[[[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,1]],
+					[[0,0,0,0],[0,0,0,0],[0,0,0,1],[0,1,1,1]],
+					[[0,0,0,0],[0,0,0,1],[0,0,0,1],[0,0,1,1]],
+					[[0,0,0,1],[0,0,0,1],[0,0,0,1],[0,0,0,1]],
+					[[0,0,0,0],[0,0,0,0],[0,0,1,1],[0,0,1,1]]
+					],
+	"Layout":{
+		"R1":"Score",
+		"R2":"NextBlock",
+		"R3":"CurrentLevel",
+		"R4":"HoldBlock"
+	},
+	"NumberOfLevels":5,
+	"Levels":[
+		{ "velocity":10, "GridHeight":10, "GridWidth":6 },
+		{ "velocity":12, "GridHeight":9, "GridWidth":6 },
+		{ "velocity":14, "GridHeight":9, "GridWidth":6 },
+		{ "velocity":16, "GridHeight":9, "GridWidth":6 },
+		{ "velocity":18, "GridHeight":9, "GridWidth":6 }
+	]
+}

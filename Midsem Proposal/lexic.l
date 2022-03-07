@@ -1,4 +1,3 @@
-%option yylineno
 
 %{
 	#include<stdio.h>
@@ -6,8 +5,9 @@
 	#include<math.h>
 	/* Token type.  */
 %}
-%%
 
+
+%%
 "import" { printf("HEADER\n"); return HEADER;}
 "onCollisionEnter"|"onLevelOrder" { printf("KEYWORDFUNC\n"); return KEYWORDFUNC;}
 "goUp","goDown","goLeft","goRight" { printf("MOVEMENT\n"); return MOVEMENT;}
@@ -28,16 +28,15 @@
 "&&" { printf("and_const\n"); return and_const;}
 "=="|"!=" { printf("eq_const\n"); return eq_const;}
 "<="|">=" { printf("rel_const\n"); return rel_const;} { printf("shift_const\n"); return shift_const;}
-";"|"="|","|" { printf("\n"); "|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">" { printf("%c\n",yytext[0] ); return yytext[0];}
-
+";"|"="|","|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">" { printf("%c\n",yytext[0] ); return yytext[0];}
 [0-9]+	{return int_const;}
 [0-9]+"."[0-9]+ { printf("float_const\n"); return float_const;}
 "'"."'" { printf("char_const\n"); return char_const;}
-[a-zA-z_][a-zA-z_0-9]* { printf("id\n"); return id;}
+[a-zA-Z_][a-zA-Z_0-9]* { printf("id\n"); return id;}
 \"(\\.|[^\"])*\" { printf("string\n"); return string;}
-"//"(\\.|[^\n])*[\n] ;
-[/][*]([^*]|[*]*[^*/])*[*]+[/] ;
-[ \t\n];
+"//"(\\.|[^\n])*[\n] { printf("comment\n"); return comment;}
+[/][*]([^*]|[*]*[^*/])*[*]+[/] { printf("comment\n"); return comment;}
+[ \t\n\r]+
 %%
 
 int yywrap(void)
@@ -46,9 +45,7 @@ int yywrap(void)
 }
 
 
-int main(argc, argv)
-int argc;
-char** argv;
+int main(int argc, char** argv)
 {
 	if (argc > 1)
 	{
@@ -61,6 +58,7 @@ char** argv;
 		}
 		yyin = file;
 	}
+
 
 	while(yylex()){};
 }

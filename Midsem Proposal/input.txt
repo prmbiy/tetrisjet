@@ -1,0 +1,21 @@
+import "path_to_file"
+onCollisionEnter(Block block){
+	block.colour = 'g';
+}
+onCollisionEnter(Block block){
+	block.colour = 'b';
+}
+onLevelOver(){
+      log("Finish");
+}
+
+
+onCollisionEnter
+onCollisionEnterName
+onLevelOrder
+pokemonGo
+Block;
+Grid();
+tempFlag&&isCollison();
+break >= return;
+

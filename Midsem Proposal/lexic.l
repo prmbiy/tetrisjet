@@ -3,7 +3,9 @@
 	#include<stdio.h>
 	#include "y.tab.h"
 	#include<math.h>
-	/* Token type.  */
+	/* Strings and literals and comments can be arbitrarly long */
+	/* Refer y.tab.h for more info on tokens */
+	/* Whitespaces are ignored. Check line 41 for expression */
 %}
 
 

@@ -1,6 +1,7 @@
 %debug
 %expect 27
 %{
+//including necessary libraries
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -8,14 +9,15 @@
 #include <error.h>
 #include <errno.h>
 
-
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
+extern int yylineno;
 
+//Function to handle errors
 void yyerror(char *s)
 {
-fprintf(stderr,"%s\n",s);
+fprintf(stderr,"%s Line Number:%d\n",s, yylineno);
 return;
 }
 
@@ -26,43 +28,45 @@ int yywrap()
 
 %}
 
+//Declaring the tokens used in the grammar
 %token IF ELSE WHILE CONTINUE BREAK RETURN HEADER
 %token KEYWORDFUNC MOVEMENT BLOCKTYPE GRIDTYPE INTTYPE FLOATTYPE BOOLTYPE CHARTYPE
 %token float_const int_const char_const id op_single rel_const or_const and_const eq_const
 %token string comment space ERROR
 
-%union{
-  char *str;
-}
-
 %%
-
+//Files
 FILE      : FUNC FILE
           | comment FILE
           |
           ;
+
+//Functions
 FUNC      : KEYWORDFUNC '(' ')' '{' STM_LIST '}'
           ;
 
+//Statement List
 STM_LIST  : STM STM_LIST
           |
           ;
 
+//Statement
 STM       : IF '(' EXPR ')' STM ELSE STM
           | IF '(' EXPR ')' STM
-          | WHILE '(' EXPR ')' STM
+          | WHILE '(' EXPR ')'
           | DEC
           | ASN
           | CONTINUE ';'
           | BREAK ';'
           | RETURN ';'
-          | MOVEMENT '(' id ')' ';'
+          | MOVEMENT '(' ')' ';'
           | id '.' id '=' int_const ';'
           | comment
           | '{' STM_LIST '}'
           | ';'
           ;
 
+//Declaration
 DEC       : INTTYPE id '=' EXPR ';'
           | FLOATTYPE id '=' EXPR ';'
           | BOOLTYPE id '=' EXPR ';'
@@ -73,10 +77,12 @@ DEC       : INTTYPE id '=' EXPR ';'
           | CHARTYPE id';'
           ;
 
+//Assignment
 ASN       : id '=' EXPR ';'
           | id '=' char_const ';'
           ;
 
+//Expression
 EXPR      : EXPR or_const EXPR
           | EXPR and_const EXPR
           | EXPR eq_const EXPR
@@ -85,6 +91,7 @@ EXPR      : EXPR or_const EXPR
           | TERM
           ;
 
+//Term
 TERM      : float_const
           | int_const
           | char_const
@@ -92,7 +99,6 @@ TERM      : float_const
           | id '.' id '(' ')' ';'
           | '(' EXPR ')'
           ;
-
 
 %%
 
